@@ -12,24 +12,27 @@ Doors['r4']=r4
 Doors['r5']=r5
 Doors['r6']=r6
 
+def AvailableDoors(Room):
+    if len(Room)>4:
+        return str(Room[len(Room) - (Room[2]):len(Room)])
+    else:
+        return str(Room[len(Room)-1])
+
 def WhatPlayerSee(Room):
     QuantityDoors=str(Room[2])
-    if len(Room)>4:
-        AvailableDoors = str(Room[len(Room) - (Room[2]):len(Room)])
-        return ("You're see "+QuantityDoors+' doors to rooms:'+AvailableDoors)
-    else:
-        AvailableDoors = str(Room[len(Room)-1])
-        return ("You're see "+str(Room[2])+' doors to rooms:'+ AvailableDoors)
+    return ("You're see "+QuantityDoors+' doors to rooms:'+AvailableDoors(Room))
 
 
 def TravelRoom(Room):
-    print('You in '+ Room[0])
-    if Room[1]:
+    RoomSNumber=Room[0]
+    Win=Room[1]
+    print('You in '+ RoomSNumber)
+    if Win:
         print("You're win")
         exit()
     print(WhatPlayerSee(Room))
     chose = input('Chose the door:')
-    while chose not in (Room[len(Room)-(Room[2]):len(Room)]):
+    while chose not in AvailableDoors(Room):
         chose = input('Chose the door:')
     TravelRoom(Doors[chose])
 
