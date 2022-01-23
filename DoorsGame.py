@@ -12,21 +12,26 @@ Doors['r4']=r4
 Doors['r5']=r5
 Doors['r6']=r6
 
+def WhatPlayerSee(Room):
+    QuantityDoors=str(Room[2])
+    if len(Room)>4:
+        AvailableDoors = str(Room[len(Room) - (Room[2]):len(Room)])
+        return ("You're see "+QuantityDoors+' doors to rooms:'+AvailableDoors)
+    else:
+        AvailableDoors = str(Room[len(Room)-1])
+        return ("You're see "+str(Room[2])+' doors to rooms:'+ AvailableDoors)
+
 
 def TravelRoom(Room):
     print('You in '+ Room[0])
     if Room[1]:
         print("You're win")
         exit()
-    if len(Room)>4:
-        print("You're see "+str(Room[2])+' doors to rooms:'+str(Room[len(Room)-(Room[2]):len(Room)]))
-    else:
-        print("You're see "+str(Room[2])+' doors to rooms:'+str(Room[len(Room)-1]))
+    print(WhatPlayerSee(Room))
     chose = input('Chose the door:')
     while chose not in (Room[len(Room)-(Room[2]):len(Room)]):
         chose = input('Chose the door:')
     TravelRoom(Doors[chose])
-
 
 print("Hallo, traveler. You're entered to mysterious dungeon.")
 TravelRoom(r1)
