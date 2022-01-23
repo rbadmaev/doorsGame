@@ -1,40 +1,54 @@
-r6=['Room 6',True]
-r5=['Room 5',False,1,'r6']
-r4=['Room 4',False, 2, 'r6','r2']
-r3=['Room 3',False, 2,'r5','r1']
-r2=['Room 2',False,2,'r4','r1']
-r1=['Room 1',False,2,'r2','r3']
-Doors={}
-Doors['r1']=r1
-Doors['r2']=r2
-Doors['r3']=r3
-Doors['r4']=r4
-Doors['r5']=r5
-Doors['r6']=r6
+class Room(object):
+    def __init__(self, name, isExit, doors):
+        self.name = name
+        self.isExit = isExit
+        self._doors = doors
+        self._doorsCount = len(doors)
 
-def AvailableDoors(Room):
-    if len(Room)>4:
-        return str(Room[len(Room) - (Room[2]):len(Room)])
-    else:
-        return str(Room[len(Room)-1])
+    def doorsCount(self):
+        return self._doorsCount
 
-def WhatPlayerSee(Room):
-    QuantityDoors=str(Room[2])
-    return ("You're see "+QuantityDoors+' doors to rooms:'+AvailableDoors(Room))
+    def addDoor(self, door):
+        self._doors += [door]
+        self._doorsCount += 1
+
+    def doors(self):
+        return self._doors
+
+    def chooseDoor(self):
+        choose = input('Chose the door:')
+        while choose not in self.doors():
+            choose = input('Chose the door:')
+
+        return choose
 
 
-def TravelRoom(Room):
-    RoomSNumber=Room[0]
-    Win=Room[1]
-    print('You in '+ RoomSNumber)
-    if Win:
+
+r6=Room('Room 6', True, [])
+r5=Room('Room 5', False,['r6'])
+r4=Room('Room 4', False,[ 'r6','r2'])
+r3=Room('Room 3', False,['r5','r1'])
+r2=Room('Room 2', False,['r4','r1'])
+r1=Room('Room 1', False,['r2','r3'])
+doors={}
+doors['r1']=r1
+doors['r2']=r2
+doors['r3']=r3
+doors['r4']=r4
+doors['r5']=r5
+doors['r6']=r6
+
+def whatPlayerSee(room):
+    return ("You're see " + str(room.doorsCount()) +' doors to rooms:' + str(room.doors()))
+
+def travelRoom(room):
+    print('You in '+ room.name)
+    if room.isExit:
         print("You're win")
         exit()
-    print(WhatPlayerSee(Room))
-    chose = input('Chose the door:')
-    while chose not in AvailableDoors(Room):
-        chose = input('Chose the door:')
-    TravelRoom(Doors[chose])
+    print(whatPlayerSee(room))
+    choose = room.chooseDoor()
+    travelRoom(doors[choose])
 
-print("Hallo, traveler. You're entered to mysterious dungeon.")
-TravelRoom(r1)
+print("Hello, traveler. You're entered to mysterious dungeon.")
+travelRoom(r1)
