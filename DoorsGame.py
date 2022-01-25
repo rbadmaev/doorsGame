@@ -91,7 +91,7 @@ def travelRoom(room):
     print('You in ' + room.name)
     if room.isExit:
         os.system('cls')
-        input('You WIN!')
+        input('Youre WIN!')
     print(whatPlayerSee(room))
     choose = room.chooseDoor()
     travelRoom(doors[choose])
