@@ -6,9 +6,6 @@ class Room(object):
         self.isExit = isExit
         self.doors = doors
 
-
-
-
     def doorsCount(self):
         return len(self.doors)
 
