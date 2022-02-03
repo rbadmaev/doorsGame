@@ -15,32 +15,53 @@ class Room(object):
         return choose
 
 
+class Maze:
+    def __init__(self, name, doors):
+        self.name = name
+        self._doors = doors
 
-r6=Room('Room 6', True, [])
-r5=Room('Room 5', False,['r6'])
-r4=Room('Room 4', False,['r6','r2'])
-r3=Room('Room 3', False,['r5','r1'])
-r2=Room('Room 2', False,['r4','r1'])
-r1=Room('Room 1', False,['r2','r3'])
-doors={}
-doors['r1']=r1
-doors['r2']=r2
-doors['r3']=r3
-doors['r4']=r4
-doors['r5']=r5
-doors['r6']=r6
+    def startRoom(self):
+        return self._doors["r1"]
+
+    def getRoomBehindDoor(self, door):
+        return self._doors[door]
+
 
 def whatPlayerSee(room):
     return ("You're see " + str(room.doorsCount()) +' doors to rooms:' + str(room.doors))
 
-def travelRoom(room):
-    print('You in '+ room.name)
-    if room.isExit:
-        print("You're win")
-        exit()
-    print(whatPlayerSee(room))
-    choose = room.chooseDoor()
-    travelRoom(doors[choose])
+def travelMaze(maze):
+    print('You in '+ maze.name)
+    room = maze.startRoom()
+    while not room.isExit:
+        print(whatPlayerSee(room))
+        door = room.chooseDoor()
+        room = maze.getRoomBehindDoor(door)
+
+    print("You're have found exit from the maze " + maze.name)
+
+levels = [
+    Maze("level 1", {
+         'r1' : Room('Room 1', False,['r2','r3']),
+         'r2' : Room('Room 2', False,['r4','r1']),
+         'r3' : Room('Room 3', False,['r5','r1']),
+         'r4' : Room('Room 4', False,['r6','r2']),
+         'r5' : Room('Room 5', False,['r6']),
+         'r6' : Room('Room 6', True, [])
+    }),
+    Maze("Level 2", {
+        'r1': Room('Room 1', False,['r3','r4']),
+        'r2': Room('Room 2', False,['r2','r1']),
+        'r3': Room('Room 3', False,['r5','r1']),
+        'r4': Room('Room 4', False,['r6','r2']),
+        'r5': Room('Room 5', False,['r6']),
+        'r6': Room('Room 6', True, [])}
+    )
+]
+
 
 print("Hello, traveler. You're entered to mysterious dungeon.")
-travelRoom(r1)
+for level in levels:
+    travelMaze(level)
+
+print("You are super winner.")
