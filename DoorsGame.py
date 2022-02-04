@@ -26,8 +26,23 @@ class Maze:
     def getRoomBehindDoor(self, door):
         return self._doors[door]
 
-# class Key:
+class Level:
+    def __init__(self, levelsGuide):
+        self.levelsGuide = levelsGuide
 
+    def start_():
+        print("Приветствую путешествиник. Это тренеровочная арена в подземельях. Тут ты узаешь все об этом мире.")
+        for level in levelsGuide:
+            travelMaze(level)
+
+    def continue_():
+        pass
+
+    def choose_():
+        pass
+
+
+##################################################################3
 def whatPlayerSee(room):
     return ("You're see " + str(room.doorsCount()) +' doors to rooms:' + str(room.doors))
 
@@ -41,7 +56,28 @@ def travelMaze(maze):
 
     print("You're have found exit from the maze " + maze.name)
 
-levels = [
+###################################################################
+def MainMenu():
+    print('>>>>>>>> Name Game <<<<<<<<')
+    print('Список действий:')
+    print('Новая игра: start')
+    print('Продолжить: continue')
+    print('Выбор уровня: choose')
+
+    while True:
+        playerChoose = input('Введите команду: ')
+
+        if playerChoose == 'start':
+            Level.start_()
+        elif playerChoose == 'continue':
+            Level.continue_()
+        elif playerChoose == 'choose':
+            Level.choose_()
+        else:
+            print('Выбери только из предложеного')
+
+####################################################################
+levelsGuide = [
     Maze("level 1", {
          'r1' : Room('Room 1', False,['r2','r3']),
          'r2' : Room('Room 2', False,['r4','r1']),
@@ -68,9 +104,8 @@ levels = [
         'r1' : Room('Room 1', False, ['r2']),
         })
 ]
+####################################################################################
 
-print("Hello, traveler. You're entered to mysterious dungeon.")
-for level in levels:
-    travelMaze(level)
+MainMenu()
 
-print("You are super winner.")
+
